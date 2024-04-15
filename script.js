@@ -33,6 +33,7 @@ const switchPlayer = function () {
 };
 
 rollButtonEl.addEventListener('click', function () {
+  console.log('Roll Button Clicked');
   if (stillPlaying) {
     const dice = Math.floor(Math.random() * 6) + 1;
 
@@ -51,6 +52,7 @@ rollButtonEl.addEventListener('click', function () {
 });
 
 holdButtonEl.addEventListener('click', function () {
+  console.log('Hold button Clicked');
   if (stillPlaying) {
     scores[activePlayer] += currentScore;
     document.getElementById(`score--${activePlayer}`).textContent =
@@ -67,13 +69,25 @@ holdButtonEl.addEventListener('click', function () {
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.remove('player--active');
-
-      console.log(document.querySelector(`#name--${activePlayer}`).textContent);
-      document.querySelector(
-        `#name--${activePlayer}`
-      ).textContent = `PLAYER ${activePlayer} WINS THE GAME!!!`;
     } else {
       switchPlayer();
     }
   }
+});
+
+newButtonEl.addEventListener('click', function () {
+  stillPlaying = true;
+  document.getElementById(`score--${activePlayer}`).textContent = 0;
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  firstScoreEl.textContent = 0;
+  secondSCoreEl.textContent = 0;
+  diceEl.classList.add('hidden');
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.remove('player--winner');
+  document
+    .querySelector(`.player--${activePlayer}`)
+    .classList.add('player--active');
+  activePlayer = 0;
+  switchPlayer();
 });
